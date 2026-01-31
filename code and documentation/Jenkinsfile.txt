@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+    
+    stages {
+        // Strategy 1: Main Branch
+        stage('CI/CD Pipeline') {
+            when { branch 'main' }
+            steps {
+                echo 'Running Full CI/CD Pipeline...'
+            }
+        }
+
+        // Strategy 2: Feature Branches
+        stage('Feature Testing') {
+            when { branch 'feature/*' }
+            steps {
+                echo 'Running Tests Only...'
+            }
+        }
+
+        // Strategy 3: Release Branches
+        stage('Release Validation') {
+            when { branch 'release/*' }
+            steps {
+                echo 'Running Security Scans...'
+            }
+        }
+    }
+
+    // --- THIS IS THE NEW PART THAT TRACKS FILES ---
+    post {
+        always {
+            // This command saves ALL files (**) from the workspace
+            archiveArtifacts artifacts: '**/*', allowEmptyArchive: true
+        }
+    }
+}

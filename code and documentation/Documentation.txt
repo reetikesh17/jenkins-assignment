@@ -1,0 +1,52 @@
+=======================================================================
+JENKINS SYSTEM DOCUMENTATION
+=======================================================================
+
+-----------------------------------------------------------------------
+1. INSTALLATION GUIDE
+-----------------------------------------------------------------------
+Prerequisites: 
+- Java JDK 17+ installed (Check: java -version)
+- Minimum 2GB RAM / 10GB Disk Space
+
+Steps:
+1. Download Jenkins WAR or setup Repository.
+2. Run Command: java -jar jenkins.war --httpPort=8080
+3. Initial Password Location: 
+   /var/lib/jenkins/secrets/initialAdminPassword
+4. Access via Browser: http://localhost:8080
+
+-----------------------------------------------------------------------
+2. USER MANUAL
+-----------------------------------------------------------------------
+Job Management:
+- To Create: New Item -> Enter Name -> Select 'Pipeline' -> OK.
+- To Run: Click 'Build Now' in the left-hand sidebar.
+- To View Output: Click the Build Number (#) -> Console Output.
+
+Standard Pipeline Structure:
+  pipeline {
+      agent any
+      stages {
+          stage('Build') { steps { echo 'Building...' } }
+          stage('Test')  { steps { echo 'Testing...' } }
+          stage('Deploy'){ steps { echo 'Deploying...' } }
+      }
+  }
+
+-----------------------------------------------------------------------
+3. TROUBLESHOOTING GUIDE
+-----------------------------------------------------------------------
+ISSUE: Jenkins won't start.
+FIX: Check if port 8080 is used by another app (netstat -ano).
+
+ISSUE: "Access Denied" for Jenkins user.
+FIX: Ensure Jenkins user has 'sudo' rights or ownership of /var/lib/jenkins.
+
+ISSUE: Build stuck in queue.
+FIX: Check Manage Jenkins > Manage Nodes to see if executors are available.
+
+=======================================================================
+Contact: [Your Email/Team Name]
+Last Updated: 2026-01-31
+=======================================================================
